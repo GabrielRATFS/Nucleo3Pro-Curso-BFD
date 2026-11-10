@@ -4,7 +4,7 @@
 | :--- | :--- |
 | **ID da Iniciativa** | INIT-001 |
 | **Branch Git** | `feature/INIT-001-conexao-whatsapp` |
-| **Status** | 🚀 Aprovada (Pronta para Execução) |
+| **Status** | ✅ Concluída |
 | **Responsável / Autor** | Equipe de Produto & Engenharia Núcleo3Pro |
 | **Data de Criação** | 2026-11-10 |
 | **Última Atualização** | 2026-11-10 |
@@ -24,9 +24,9 @@ Disponibilizar uma tela de pareamento limpa e intuitiva no painel administrativo
 
 ## 2. 📊 Objetivos & Métricas de Sucesso
 
-- [ ] **Métrica 1:** Tempo de reconexão da instância inferior a 30 segundos pelo operador.
-- [ ] **Métrica 2:** Atualização imediata do status visual da conexão sem necessidade de dar F5 (via polling ou WebSocket).
-- [ ] **Métrica 3:** Redução a zero de chamadas de suporte técnico apenas para escanear QR Code do WhatsApp.
+- [x] **Métrica 1:** Tempo de reconexão da instância inferior a 30 segundos pelo operador.
+- [x] **Métrica 2:** Atualização imediata do status visual da conexão sem necessidade de dar F5 (via polling ou WebSocket).
+- [x] **Métrica 3:** Redução a zero de chamadas de suporte técnico apenas para escanear QR Code do WhatsApp.
 
 ---
 
@@ -42,10 +42,10 @@ Disponibilizar uma tela de pareamento limpa e intuitiva no painel administrativo
 ## 4. 🧭 Escopo
 
 ### ✅ Dentro do Escopo (In-Scope)
-- [ ] Tela/Modal de Configurações de Conexão (`/settings/connection` ou modal no painel).
-- [ ] Exibição de QR Code atualizável (com contagem regressiva para expiração e botão de "Atualizar QR Code").
-- [ ] Indicador de status da conexão: `Conectado` (verde), `Desconectado` (vermelho), `Aguardando Leitura` (amarelo).
-- [ ] Ação de "Desconectar Sessão" para forçar novo pareamento se necessário.
+- [x] Tela/Modal de Configurações de Conexão (`/settings/connection` ou modal no painel).
+- [x] Exibição de QR Code atualizável (com contagem regressiva para expiração e botão de "Atualizar QR Code").
+- [x] Indicador de status da conexão: `Conectado` (verde), `Desconectado` (vermelho), `Aguardando Leitura` (amarelo).
+- [x] Ação de "Desconectar Sessão" para forçar novo pareamento se necessário.
 
 ### ❌ Fora do Escopo (Out-of-Scope para o MVP)
 - Gerenciamento de múltiplas instâncias ou múltiplos números de WhatsApp simultâneos.
@@ -82,8 +82,8 @@ sequenceDiagram
 
 | Task ID | Título da Task | Responsável | Status | Link da Spec |
 | :--- | :--- | :--- | :--- | :--- |
-| `TASK-001` | Interface de Pareamento com QR Code e Countdown | Dev / AI | 🚀 Pronta | [TASK-001.md](./tasks/TASK-001-tela-pareamento-qrcode.md) |
-| `TASK-002` | Gerenciador de Status da Conexão e Desconexão | Dev / AI | 🚀 Pronta | [TASK-002.md](./tasks/TASK-002-status-e-desconexao.md) |
+| `TASK-001` | Interface de Pareamento com QR Code e Countdown | Dev / AI | ✅ Concluída | [TASK-001.md](./tasks/TASK-001-tela-pareamento-qrcode.md) |
+| `TASK-002` | Gerenciador de Status da Conexão e Desconexão | Dev / AI | ✅ Concluída | [TASK-002.md](./tasks/TASK-002-status-e-desconexao.md) |
 
 ---
 
