@@ -3,7 +3,7 @@
 | Metadado | Detalhe |
 | :--- | :--- |
 | **Iniciativa Relacionada** | [INIT-001 - Conexão WhatsApp](../spec.md) |
-| **Status** | 🚀 Pronta |
+| **Status** | ✅ Concluída |
 | **Prioridade** | Média |
 | **Responsável** | Dev / AI |
 | **Data de Criação** | 2026-11-10 |
@@ -56,18 +56,18 @@ interface DisconnectDialogProps {
 
 ## 5. ✅ Critérios de Aceite
 
-- [ ] **Critério 1:** Badge visível no cabeçalho ou menu lateral em todas as telas.
-- [ ] **Critério 2:** O botão de desconectar exibe diálogo de confirmação com aviso de impacto.
-- [ ] **Critério 3:** Ao confirmar desconexão, o estado global/local muda para `DISCONNECTED` e o QR Code pode ser gerado novamente.
+- [x] **Critério 1:** Badge visível no cabeçalho ou menu lateral em todas as telas.
+- [x] **Critério 2:** O botão de desconectar exibe diálogo de confirmação com aviso de impacto.
+- [x] **Critério 3:** Ao confirmar desconexão, o estado global/local muda para `DISCONNECTED` e o QR Code pode ser gerado novamente.
 
 ---
 
 ## 6. 🛠️ Checklist de Implementação Passo a Passo
 
-- [ ] **Passo 1:** Criar `ConnectionBadge.jsx` com suporte às variantes de cores do status.
-- [ ] **Passo 2:** Criar `DisconnectDialog.jsx` com modal de confirmação.
-- [ ] **Passo 3:** Integrar os componentes ao layout principal em `src/App.jsx`.
-- [ ] **Passo 4:** Simular alternância de status para validar a reatividade da interface.
+- [x] **Passo 1:** Criar `ConnectionBadge.jsx` com suporte às variantes de cores do status.
+- [x] **Passo 2:** Criar `DisconnectDialog.jsx` com modal de confirmação.
+- [x] **Passo 3:** Integrar os componentes ao layout principal em `src/App.jsx`.
+- [x] **Passo 4:** Simular alternância de status para validar a reatividade da interface.
 
 ---
 

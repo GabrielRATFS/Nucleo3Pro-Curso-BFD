@@ -10,7 +10,7 @@ O MVP está desenhado para validar a operação no menor tempo possível, priori
 
 | ID | Iniciativa | Módulo | Status | Target | Link da Spec |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `INIT-001` | **Conexão & Pareamento WhatsApp** | Configuração / Setup | 🚀 Pronta | MVP v1.0 | [Ver Spec](./INIT-001-conexao-pareamento-whatsapp/spec.md) |
+| `INIT-001` | **Conexão & Pareamento WhatsApp** | Configuração / Setup | ✅ Concluída | MVP v1.0 | [Ver Spec](./INIT-001-conexao-pareamento-whatsapp/spec.md) |
 | `INIT-002` | **Caixa de Entrada & Transbordo Humano** | Core / Atendimento | 🚀 Pronta | MVP v1.0 | [Ver Spec](./INIT-002-caixa-de-entrada-transbordo/spec.md) |
 | `INIT-003` | **Contexto Mínimo do Contato (Mini-CRM)** | Contexto / Operação | 🚀 Pronta | MVP v1.0 | [Ver Spec](./INIT-003-mini-crm-contexto-contato/spec.md) |
 | `INIT-004` | **Respostas Rápidas (Canned Responses)** | Produtividade | 🚀 Pronta | MVP v1.0 | [Ver Spec](./INIT-004-respostas-rapidas/spec.md) |

@@ -3,7 +3,7 @@
 | Metadado | Detalhe |
 | :--- | :--- |
 | **Iniciativa Relacionada** | [INIT-001 - Conexão WhatsApp](../spec.md) |
-| **Status** | 🚀 Pronta |
+| **Status** | ✅ Concluída |
 | **Prioridade** | Alta |
 | **Responsável** | Dev / AI |
 | **Data de Criação** | 2026-11-10 |
@@ -60,26 +60,26 @@ interface QRCodeCardProps {
 3. Quando o status mudar para `CONNECTED`, esconder o QR Code e exibir mensagem de sucesso com ícone verde.
 
 ### Casos de Borda
-- [ ] **Falha de rede/API offline:** Exibir toast ou mensagem de alerta caso o backend não responda.
-- [ ] **QR Code inválido/vazio:** Não quebrar a tela; exibir placeholder e permitir tentar novamente.
+- [x] **Falha de rede/API offline:** Exibir toast ou mensagem de alerta caso o backend não responda.
+- [x] **QR Code inválido/vazio:** Não quebrar a tela; exibir placeholder e permitir tentar novamente.
 
 ---
 
 ## 5. ✅ Critérios de Aceite
 
-- [ ] **Critério 1:** Ao abrir a tela/modal no estado `SCAN_QR_CODE`, a imagem do QR Code é renderizada nítida no centro do card.
-- [ ] **Critério 2:** Instruções claras de escaneamento em 3 passos aparecem ao lado ou abaixo do código.
-- [ ] **Critério 3:** Clicar no botão "Atualizar" dispara a requisição e exibe estado de loading no botão.
-- [ ] **Critério 4:** Totalmente adaptável para telas desktop e mobile.
+- [x] **Critério 1:** Ao abrir a tela/modal no estado `SCAN_QR_CODE`, a imagem do QR Code é renderizada nítida no centro do card.
+- [x] **Critério 2:** Instruções claras de escaneamento em 3 passos aparecem ao lado ou abaixo do código.
+- [x] **Critério 3:** Clicar no botão "Atualizar" dispara a requisição e exibe estado de loading no botão.
+- [x] **Critério 4:** Totalmente adaptável para telas desktop e mobile.
 
 ---
 
 ## 6. 🛠️ Checklist de Implementação Passo a Passo
 
-- [ ] **Passo 1:** Criar `src/components/connection/QRCodeCard.jsx` com suporte aos estados (`loading`, `ready`, `expired`).
-- [ ] **Passo 2:** Integrar container de diálogo/modal ou seção de conexão em `src/App.jsx`.
-- [ ] **Passo 3:** Adicionar timer simulado ou real de expiração (countdown) para UX fluida.
-- [ ] **Passo 4:** Adicionar tratamento visual quando o aparelho for autenticado com sucesso.
+- [x] **Passo 1:** Criar `src/components/connection/QRCodeCard.jsx` com suporte aos estados (`loading`, `ready`, `expired`).
+- [x] **Passo 2:** Integrar container de diálogo/modal ou seção de conexão em `src/App.jsx`.
+- [x] **Passo 3:** Adicionar timer simulado ou real de expiração (countdown) para UX fluida.
+- [x] **Passo 4:** Adicionar tratamento visual quando o aparelho for autenticado com sucesso.
 
 ---
 
