@@ -4,6 +4,7 @@ import { useAuth } from './auth.jsx';
 import Home from './pages/Home.jsx';
 import Login from './pages/Login.jsx';
 import Simulado from './pages/Simulado.jsx';
+import Simulados from './pages/Simulados.jsx';
 import Resultado from './pages/Resultado.jsx';
 import TesteUtilizado from './pages/TesteUtilizado.jsx';
 import Admin from './pages/Admin.jsx';
@@ -20,7 +21,7 @@ function Header() {
         &#9776;
       </button>
       <nav className={'nav' + (aberto ? ' aberta' : '')}>
-        <NavLink to="/simulado" onClick={fechar}>Simulados</NavLink>
+        <NavLink to="/simulados" onClick={fechar}>Simulados</NavLink>
         {user?.role === 'admin' && <NavLink to="/admin" onClick={fechar}>Admin</NavLink>}
         {user ? (
           <>
@@ -58,7 +59,9 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/entrar" element={<Login />} />
-          <Route path="/simulado" element={<RequireAuth><Simulado /></RequireAuth>} />
+          <Route path="/simulados" element={<RequireAuth><Simulados /></RequireAuth>} />
+          <Route path="/simulado/:id" element={<RequireAuth><Simulado /></RequireAuth>} />
+          <Route path="/simulado" element={<Navigate to="/simulados" replace />} />
           <Route path="/resultado" element={<RequireAuth><Resultado /></RequireAuth>} />
           <Route path="/teste-utilizado" element={<RequireAuth><TesteUtilizado /></RequireAuth>} />
           <Route path="/admin" element={<RequireAdmin><Admin /></RequireAdmin>} />

@@ -19,8 +19,8 @@ export default function Home() {
         <div className="hero-txt">
           <h1>Não é sobre estudar mais. É sobre estudar certo.</h1>
           <p>Faça um simulado gratuito de saúde e descubra onde focar seus estudos.</p>
-          <Link className="btn btn-lg" to="/simulado">Começar simulado grátis</Link>
-          <small>1 teste gratuito por conta · Resultado na hora</small>
+          <Link className="btn btn-lg" to="/simulados">Começar simulado grátis</Link>
+          <small>1 teste gratuito por pessoa · Resultado na hora</small>
           <div className="aviso">Acesso liberado apenas para administradores nesta fase.</div>
         </div>
         <div className="foto">[Foto: estudante ou profissional da saúde]</div>
@@ -45,7 +45,7 @@ export default function Home() {
 
       <section className="cta">
         <h2>Seu plano de aprovação começa aqui.</h2>
-        <Link className="btn btn-lg" to="/simulado">Fazer meu teste grátis</Link>
+        <Link className="btn btn-lg" to="/simulados">Fazer meu teste grátis</Link>
       </section>
     </>
   );

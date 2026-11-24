@@ -1,24 +1,21 @@
 import * as pdfjs from 'pdfjs-dist';
 import workerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
+import { lerPdf } from './pdfCore.js';
 import { limparPaginas } from './parser.js';
 
 pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
 
-// Lê o texto selecionável do PDF no navegador (nada é enviado a servidor).
-// Mantém uma linha por linha do PDF e remove cabeçalhos/rodapés repetidos.
-export async function lerTextoPdf(arquivo) {
-  const pdf = await pdfjs.getDocument({ data: await arquivo.arrayBuffer() }).promise;
-  const paginas = [];
-  for (let p = 1; p <= pdf.numPages; p += 1) {
-    const conteudo = await (await pdf.getPage(p)).getTextContent();
-    const linhas = [];
-    let atual = '';
-    for (const it of conteudo.items) {
-      atual += it.str;
-      if (it.hasEOL) { linhas.push(atual); atual = ''; } else atual += ' ';
-    }
-    if (atual.trim()) linhas.push(atual);
-    paginas.push(linhas);
-  }
-  return limparPaginas(paginas);
+const criarCanvas = (width, height) => Object.assign(document.createElement('canvas'), { width, height });
+const ler = async (arquivo, comImagens) =>
+  lerPdf(pdfjs, new Uint8Array(await arquivo.arrayBuffer()), { criarCanvas, comImagens });
+
+// Simulado: texto sem cabeçalho/rodapé repetidos + figuras recortadas (ligadas às questões pelo parser).
+export async function lerPdfSimulado(arquivo) {
+  const { paginas, imagens } = await ler(arquivo, true);
+  return { texto: limparPaginas(paginas.map((p) => p.map((l) => l.t))), imagens };
+}
+
+// Apostila: linhas com o tamanho da fonte, usadas para achar títulos de capítulos.
+export async function lerPdfApostila(arquivo) {
+  return (await ler(arquivo, false)).paginas;
 }

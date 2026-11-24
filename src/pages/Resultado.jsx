@@ -26,7 +26,7 @@ export default function Resultado() {
   const { user } = useAuth();
   const nav = useNavigate();
   const r = getResultado(user.email);
-  if (!r) return <Navigate to="/simulado" replace />;
+  if (!r) return <Navigate to="/simulados" replace />;
 
   const f = faixa(r.nota);
   const { cursos, apostilas } = ofertas(r.porTema, user.interesses || [], f.id);
@@ -59,7 +59,7 @@ export default function Resultado() {
           <button className="btn" disabled>Ver planos de simulados (em breve)</button>
         </div>
         {user.role === 'admin' && (
-          <button className="link" onClick={() => { clearResultado(user.email); nav('/simulado'); }}>
+          <button className="link" onClick={() => { clearResultado(user.email); nav('/simulados'); }}>
             Admin: refazer teste
           </button>
         )}

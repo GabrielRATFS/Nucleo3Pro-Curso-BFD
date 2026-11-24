@@ -1,0 +1,4 @@
+.uso { border-left: 4px solid var(--amarelo); background: var(--fundo); padding: 14px 18px; border-radius: 12px; margin: 16px 0 24px; max-width: 880px; }
+.q-img { display: block; max-width: 100%; height: auto; margin: 0 0 16px; border-radius: 10px; border: 1px solid #D7E9EF; }
+.cat h1 { color: var(--escuro); font-size: 32px; }
+.cat .card .btn { margin-top: 4px; }

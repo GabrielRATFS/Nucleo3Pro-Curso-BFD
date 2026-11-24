@@ -10,12 +10,12 @@ export default function Login() {
   const [senha, setSenha] = useState('');
   const [erro, setErro] = useState('');
 
-  if (user) return <Navigate to="/simulado" replace />;
+  if (user) return <Navigate to="/simulados" replace />;
 
   function enviar(e) {
     e.preventDefault();
     const r = login(email, senha);
-    if (r.ok) nav(state?.from || '/simulado', { replace: true });
+    if (r.ok) nav(state?.from || '/simulados', { replace: true });
     else setErro(r.erro);
   }
 

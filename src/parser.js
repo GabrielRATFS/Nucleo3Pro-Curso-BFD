@@ -13,7 +13,7 @@ export function limparPaginas(paginas) {
   const cont = new Map();
   paginas.forEach((ls) => new Set(ls.map(norm).filter(Boolean)).forEach((k) => cont.set(k, (cont.get(k) || 0) + 1)));
   const min = Math.max(3, Math.ceil(paginas.length / 2));
-  return paginas.map((ls) => ls.filter((l) => (cont.get(norm(l)) || 0) < min)).flat().join('\n');
+  return paginas.map((ls) => ls.filter((l) => l.includes('\u0002') || (cont.get(norm(l)) || 0) < min)).flat().join('\n');
 }
 
 function extrairAlternativas(seg) {
@@ -43,7 +43,7 @@ function extrairAlternativas(seg) {
   };
 }
 
-export function parseQuestoes(bruto) {
+export function parseQuestoes(bruto, imagens = []) {
   let texto = bruto.replace(/\r/g, '').replace(/[ \t]+/g, ' ');
 
   // Gabarito: última ocorrência da palavra, lendo pares "número + letra".
@@ -91,6 +91,10 @@ export function parseQuestoes(bruto) {
       if (q > m.i && titulo(q)) seg = [linhas[m.i].slice(m.ini), ...linhas.slice(m.i + 1, q)].join('\n');
     }
 
+    // Marcador de figura (\u0002N\u0002) deixado na leitura do PDF: liga a imagem N a esta questão.
+    let imagem;
+    seg = seg.replace(/\u0002(\d+)\u0002/g, (_, n) => { imagem ??= imagens[Number(n)]; return ' '; });
+
     let letra = null;
     const inline = seg.match(/(?:gabarito|resposta)\s*:\s*\(?([A-Ea-e])\)?(?![a-zà-ú])/i);
     if (inline) { letra = inline[1].toUpperCase(); seg = seg.replace(inline[0], ' '); }
@@ -107,6 +111,7 @@ export function parseQuestoes(bruto) {
       enunciado: r.enunciado,
       alternativas: r.alternativas,
       correta: c >= 0 && c < r.alternativas.length ? c : null,
+      ...(imagem ? { imagem } : {}),
     });
   });
 
