@@ -1,7 +1,7 @@
 import React, { useState } from "react"
-import { QrCode, LogOut, CheckCircle2, Bot, MessageSquare, Sparkles } from "lucide-react"
+import { ShieldCheck, LogOut, CheckCircle2, Bot, MessageSquare, Sparkles, KeyRound, AlertTriangle } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { QRCodeCard } from "@/components/connection/QRCodeCard"
+import { WhatsAppCloudCard } from "@/components/connection/WhatsAppCloudCard"
 import { ConnectionModal } from "@/components/connection/ConnectionModal"
 import { ConnectionBadge } from "@/components/connection/ConnectionBadge"
 import { DisconnectDialog } from "@/components/connection/DisconnectDialog"
@@ -10,12 +10,33 @@ export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isDisconnectDialogOpen, setIsDisconnectDialogOpen] = useState(false)
   const [isDisconnecting, setIsDisconnecting] = useState(false)
-  const [connectionStatus, setConnectionStatus] = useState("CONNECTED") // Inicia demonstrando o estado conectado ou conforme interação
-  const [phoneNumber] = useState("+55 (11) 98765-4321")
+  const [connectionStatus, setConnectionStatus] = useState("CONNECTED") // 'CONNECTED' | 'DISCONNECTED' | 'CONNECTING' | 'UNAUTHORIZED'
 
-  const handleRefreshQRCode = async () => {
-    // Simula chamada de backend para gerar novo QR Code
-    await new Promise((resolve) => setTimeout(resolve, 800))
+  // Dados oficiais da conta WhatsApp Business (Meta Cloud API)
+  const [credentials, setCredentials] = useState({
+    wabaId: "109283746501928",
+    phoneNumberId: "102938475610293",
+    accessToken: "EAAG...m4ZBQZDZD",
+    verifyToken: "nucleo3pro_secret_token_2026",
+    phoneNumber: "+55 (11) 98765-4321",
+    businessName: "Núcleo3Pro Cursos & Treinamentos",
+    qualityRating: "GREEN",
+    messagingTier: "TIER_1K",
+    webhookStatus: "ACTIVE",
+  })
+
+  const handleSaveCredentials = async (newValues) => {
+    // Simula chamada de backend para validar as chaves junto à Graph API da Meta
+    await new Promise((resolve) => setTimeout(resolve, 1200))
+    setCredentials((prev) => ({
+      ...prev,
+      ...newValues,
+      businessName: "Núcleo3Pro Cursos & Treinamentos",
+      phoneNumber: "+55 (11) 98765-4321",
+      qualityRating: "GREEN",
+    }))
+    setConnectionStatus("CONNECTED")
+    setIsModalOpen(false)
   }
 
   const handleTriggerDisconnect = () => {
@@ -25,7 +46,7 @@ export default function App() {
   const handleConfirmDisconnect = async () => {
     setIsDisconnecting(true)
     try {
-      // Simula chamada de backend para logout da instância WhatsApp
+      // Simula chamada de backend para revogar e limpar credenciais
       await new Promise((resolve) => setTimeout(resolve, 900))
       setConnectionStatus("DISCONNECTED")
       setIsDisconnectDialogOpen(false)
@@ -35,11 +56,12 @@ export default function App() {
   }
 
   const handleBadgeClick = () => {
-    if (connectionStatus === "CONNECTED") {
-      setIsDisconnectDialogOpen(true)
-    } else {
-      setIsModalOpen(true)
-    }
+    setIsModalOpen(true)
+  }
+
+  const handleTestConnection = async () => {
+    // Simula ping de teste de envio de template na Meta Graph API
+    await new Promise((resolve) => setTimeout(resolve, 1000))
   }
 
   return (
@@ -62,10 +84,10 @@ export default function App() {
 
           {/* Área de Ações e Status da Conexão */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* Badge de Status Permanente do WhatsApp */}
+            {/* Badge de Status Oficial do WhatsApp Cloud API */}
             <ConnectionBadge
               status={connectionStatus}
-              phoneNumber={phoneNumber}
+              phoneNumber={credentials.phoneNumber}
               onOpenModal={handleBadgeClick}
             />
 
@@ -78,7 +100,7 @@ export default function App() {
                 className="hidden md:inline-flex gap-1.5 text-xs text-destructive hover:bg-destructive/10 border-destructive/30"
               >
                 <LogOut className="size-3.5" />
-                <span>Desconectar</span>
+                <span>Revogar Acesso</span>
               </Button>
             ) : (
               <Button
@@ -87,8 +109,8 @@ export default function App() {
                 onClick={() => setIsModalOpen(true)}
                 className="inline-flex gap-1.5 text-xs border-border/80 shadow-xs"
               >
-                <QrCode className="size-3.5 text-primary" />
-                <span className="hidden sm:inline">Parear WhatsApp</span>
+                <KeyRound className="size-3.5 text-primary" />
+                <span className="hidden sm:inline">Configurar Meta API</span>
               </Button>
             )}
           </div>
@@ -97,13 +119,14 @@ export default function App() {
 
       {/* Conteúdo Principal do Painel */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col items-center justify-center">
-        <div className="w-full max-w-2xl space-y-6">
-          {/* Card de Pareamento / Status da Sessão */}
-          <QRCodeCard
+        <div className="w-full max-w-3xl space-y-6">
+          {/* Card de Configuração e Diagnóstico da Cloud API Oficial */}
+          <WhatsAppCloudCard
             status={connectionStatus}
-            onRefreshQRCode={handleRefreshQRCode}
+            credentials={credentials}
+            onSaveCredentials={handleSaveCredentials}
             onDisconnect={handleTriggerDisconnect}
-            phoneConnected={phoneNumber}
+            onTestConnection={handleTestConnection}
           />
 
           {/* Painel Informativo de Funcionalidades */}
@@ -113,9 +136,9 @@ export default function App() {
                 <Bot className="size-4" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-sm font-semibold text-foreground">Disjuntor & Bot</h4>
+                <h4 className="text-sm font-semibold text-foreground">Disjuntor & Bot com Meta Cloud</h4>
                 <p className="text-xs text-muted-foreground">
-                  O bot de IA opera em conjunto com a instância pareada para qualificar leads e orientar alunos.
+                  A IA processa mensagens recebidas via Webhook oficial da Meta com alta confiabilidade e latência reduzida.
                 </p>
               </div>
             </div>
@@ -125,19 +148,19 @@ export default function App() {
                 <MessageSquare className="size-4" />
               </div>
               <div className="space-y-1">
-                <h4 className="text-sm font-semibold text-foreground">Caixa de Entrada</h4>
+                <h4 className="text-sm font-semibold text-foreground">Caixa de Entrada & Transbordo</h4>
                 <p className="text-xs text-muted-foreground">
-                  Mensagens recebidas são despachadas instantaneamente para a fila de transbordo humano.
+                  Mensagens de texto e mídias são entregues diretamente para a fila de atendimento humano sem risco de bloqueio.
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Controles de Simulação & Testes Rápidos */}
+          {/* Controles de Simulação & Testes Rápidos da Cloud API */}
           <div className="rounded-xl border border-border/60 bg-card/60 p-4 text-xs text-muted-foreground shadow-xs flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-2 font-medium text-foreground">
               <Sparkles className="size-3.5 text-primary" />
-              <span>Alternar Estados da Conexão (Ambiente de Validação):</span>
+              <span>Simular Cenários da Meta Graph API:</span>
             </div>
             <div className="flex flex-wrap items-center gap-1.5">
               <Button
@@ -147,22 +170,22 @@ export default function App() {
                 className={connectionStatus === "CONNECTED" ? "bg-emerald-600 hover:bg-emerald-700" : ""}
               >
                 <CheckCircle2 className="size-3 mr-1" />
-                Conectado
+                Conectado (Alta Qualidade)
               </Button>
               <Button
-                variant={connectionStatus === "SCAN_QR_CODE" ? "default" : "outline"}
+                variant={connectionStatus === "UNAUTHORIZED" ? "default" : "outline"}
                 size="xs"
-                onClick={() => setConnectionStatus("SCAN_QR_CODE")}
+                onClick={() => setConnectionStatus("UNAUTHORIZED")}
               >
-                <QrCode className="size-3 mr-1" />
-                Aguardando QR Code
+                <AlertTriangle className="size-3 mr-1 text-amber-500" />
+                Token Expirado (401)
               </Button>
               <Button
                 variant={connectionStatus === "CONNECTING" ? "default" : "outline"}
                 size="xs"
                 onClick={() => setConnectionStatus("CONNECTING")}
               >
-                Conectando...
+                Validando API...
               </Button>
               <Button
                 variant={connectionStatus === "DISCONNECTED" ? "destructive" : "outline"}
@@ -176,17 +199,18 @@ export default function App() {
         </div>
       </main>
 
-      {/* Modal de Conexão WhatsApp */}
+      {/* Modal de Conexão WhatsApp Business Cloud API */}
       <ConnectionModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         status={connectionStatus}
-        onRefreshQRCode={handleRefreshQRCode}
+        credentials={credentials}
+        onSaveCredentials={handleSaveCredentials}
         onDisconnect={handleTriggerDisconnect}
-        phoneConnected={phoneNumber}
+        onTestConnection={handleTestConnection}
       />
 
-      {/* Diálogo de Confirmação de Desconexão */}
+      {/* Diálogo de Confirmação de Desconexão / Revogação */}
       <DisconnectDialog
         isOpen={isDisconnectDialogOpen}
         onClose={() => setIsDisconnectDialogOpen(false)}

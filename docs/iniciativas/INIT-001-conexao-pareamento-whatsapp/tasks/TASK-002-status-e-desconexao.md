@@ -1,4 +1,4 @@
-# [TASK-002] Gerenciador de Status da Conexão e Desconexão
+# [TASK-002] Gerenciador de Status da Conexão Oficial e Revogação
 
 | Metadado | Detalhe |
 | :--- | :--- |
@@ -7,74 +7,28 @@
 | **Prioridade** | Média |
 | **Responsável** | Dev / AI |
 | **Data de Criação** | 2026-11-10 |
+| **Última Atualização** | 2026-11-11 |
 
 ---
 
 ## 1. 📖 Contexto & Motivação
-O atendente ou administrador precisa saber a qualquer momento se a conexão com o WhatsApp está operacional ou se caiu, sem sair da tela principal de atendimento. Além disso, em caso de troca de número ou falha de sessão, deve ser possível desconectar a instância pelo próprio painel.
+A saúde da conexão oficial com a Meta deve ser visível continuamente no painel para que a equipe saiba se o canal oficial está ativo, se o token expirou ou se há restrições. A ação de desconexão revoga as credenciais da API com segurança.
 
 ---
 
 ## 2. 🗂️ Escopo Técnico & Arquivos Afetados
 
-### Arquivos a Criar
-- `src/components/connection/ConnectionBadge.jsx` — Indicador compacto (ponto verde/vermelho + texto) para o header da aplicação.
-- `src/components/connection/DisconnectDialog.jsx` — Diálogo de confirmação para deslogar a sessão do WhatsApp.
+### Arquivos Criados/Atualizados
+- `src/components/connection/ConnectionBadge.jsx` — Badge com status da Meta Cloud API (Ponto verde `WhatsApp Oficial Conectado`, amarelo `Token Expirado`, vermelho `Desconectado`).
+- `src/components/connection/DisconnectDialog.jsx` — Diálogo com aviso de impacto na automação de IA e webhooks.
 
-### Arquivos a Modificar
-- `src/App.jsx` ou layout principal — Inserir o badge de conexão no topo.
-
----
-
-## 3. 🧩 Contratos de Dados & Interfaces
-
-```typescript
-interface ConnectionBadgeProps {
-  status: 'CONNECTED' | 'DISCONNECTED' | 'CONNECTING';
-  phoneNumber?: string;
-  onOpenModal: () => void;
-}
-
-interface DisconnectDialogProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onConfirmDisconnect: () => Promise<void>;
-  isDisconnecting: boolean;
-}
-```
+### Arquivos Modificados
+- `src/App.jsx` — Inserção do badge no cabeçalho e controle de estados de validação.
 
 ---
 
-## 4. ⚖️ Regras de Negócio & Casos de Borda
+## 3. ✅ Critérios de Aceite
 
-1. Se `status === 'CONNECTED'`, o badge exibe ponto verde e o texto "WhatsApp Conectado" (ou número conectado).
-2. Se `status === 'DISCONNECTED'`, o badge exibe ponto vermelho com texto pulsante "WhatsApp Desconectado".
-3. Clicar no badge desconectado deve abrir diretamente o modal do QR Code.
-4. Desconectar requer confirmação no diálogo para evitar quedas acidentais do bot em horário comercial.
-
----
-
-## 5. ✅ Critérios de Aceite
-
-- [x] **Critério 1:** Badge visível no cabeçalho ou menu lateral em todas as telas.
-- [x] **Critério 2:** O botão de desconectar exibe diálogo de confirmação com aviso de impacto.
-- [x] **Critério 3:** Ao confirmar desconexão, o estado global/local muda para `DISCONNECTED` e o QR Code pode ser gerado novamente.
-
----
-
-## 6. 🛠️ Checklist de Implementação Passo a Passo
-
-- [x] **Passo 1:** Criar `ConnectionBadge.jsx` com suporte às variantes de cores do status.
-- [x] **Passo 2:** Criar `DisconnectDialog.jsx` com modal de confirmação.
-- [x] **Passo 3:** Integrar os componentes ao layout principal em `src/App.jsx`.
-- [x] **Passo 4:** Simular alternância de status para validar a reatividade da interface.
-
----
-
-## 🤖 Prompt para IA
-
-```markdown
-Por favor, consulte a spec em `docs/iniciativas/INIT-001-conexao-pareamento-whatsapp/tasks/TASK-002-status-e-desconexao.md`.
-Crie o componente `ConnectionBadge.jsx` e o `DisconnectDialog.jsx` integrando-os ao topo da aplicação para sinalizar o status da conexão do WhatsApp.
-```
-
+- [x] **Critério 1:** Badge visível no header indicando se a API Oficial está conectada ou desconectada.
+- [x] **Critério 2:** Clique no badge abre o modal de configurações e diagnóstico da Cloud API.
+- [x] **Critério 3:** Diálogo de confirmação para revogação das credenciais com aviso de interrupção dos webhooks.

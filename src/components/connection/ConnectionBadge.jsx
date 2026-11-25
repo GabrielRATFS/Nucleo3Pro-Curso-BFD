@@ -1,12 +1,13 @@
 import React from "react"
-import { Wifi, WifiOff, RefreshCw, QrCode } from "lucide-react"
+import { ShieldCheck, ShieldAlert, RefreshCw, KeyRound, CheckCircle2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 /**
- * ConnectionBadge: Indicador compacto de status da conexão WhatsApp no cabeçalho.
- * - Ponto verde se conectado ("WhatsApp Conectado" ou número vinculado)
- * - Ponto vermelho pulsante se desconectado ("WhatsApp Desconectado")
- * - Clicar no badge abre o modal de conexão/pareamento.
+ * ConnectionBadge: Indicador de status da conexão WhatsApp Business Cloud API (Meta Oficial) no cabeçalho.
+ * - Ponto verde se conectado ("WhatsApp Oficial: +55...")
+ * - Ponto vermelho/alerta se desconectado ("WhatsApp Desconectado")
+ * - Ponto âmbar se validando credenciais ("Validando Meta API...")
+ * - Clicar no badge abre o modal de configuração oficial da Cloud API.
  */
 export function ConnectionBadge({
   status = "DISCONNECTED",
@@ -16,7 +17,7 @@ export function ConnectionBadge({
 }) {
   const isConnected = status === "CONNECTED"
   const isConnecting = status === "CONNECTING"
-  const isScanning = status === "SCAN_QR_CODE"
+  const isUnauthorized = status === "UNAUTHORIZED"
   const isDisconnected = status === "DISCONNECTED"
 
   const getStatusConfig = () => {
@@ -25,9 +26,9 @@ export function ConnectionBadge({
         dotClass: "bg-emerald-500 shadow-xs shadow-emerald-500/50",
         containerClass:
           "bg-emerald-500/10 hover:bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-500/25",
-        icon: <Wifi className="size-3.5" />,
-        text: phoneNumber ? `WhatsApp: ${phoneNumber}` : "WhatsApp Conectado",
-        description: "Instância sincronizada e ativa",
+        icon: <ShieldCheck className="size-3.5 text-emerald-600 dark:text-emerald-400" />,
+        text: phoneNumber ? `WhatsApp Oficial: ${phoneNumber}` : "WhatsApp Cloud API Conectado",
+        description: "Conexão oficial Meta Graph API v21.0 ativa",
       }
     }
 
@@ -37,19 +38,19 @@ export function ConnectionBadge({
         containerClass:
           "bg-amber-500/10 hover:bg-amber-500/15 text-amber-700 dark:text-amber-400 border-amber-500/25",
         icon: <RefreshCw className="size-3.5 animate-spin" />,
-        text: "Reconectando WhatsApp...",
-        description: "Tentando restabelecer sinal com o servidor",
+        text: "Validando Meta API...",
+        description: "Verificando token e webhook com os servidores da Meta",
       }
     }
 
-    if (isScanning) {
+    if (isUnauthorized) {
       return {
-        dotClass: "bg-blue-500 animate-pulse",
+        dotClass: "bg-amber-500 animate-pulse",
         containerClass:
-          "bg-blue-500/10 hover:bg-blue-500/15 text-blue-700 dark:text-blue-400 border-blue-500/25",
-        icon: <QrCode className="size-3.5" />,
-        text: "Aguardando Leitura do QR Code",
-        description: "Abra o WhatsApp e escaneie o código",
+          "bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-400 border-amber-500/30",
+        icon: <ShieldAlert className="size-3.5" />,
+        text: "Token Meta Expirado",
+        description: "Clique para renovar o token da Graph API",
       }
     }
 
@@ -58,9 +59,9 @@ export function ConnectionBadge({
       dotClass: "bg-rose-500 animate-pulse",
       containerClass:
         "bg-rose-500/10 hover:bg-rose-500/20 text-rose-700 dark:text-rose-400 border-rose-500/30 ring-1 ring-rose-500/10",
-      icon: <WifiOff className="size-3.5" />,
+      icon: <KeyRound className="size-3.5" />,
       text: "WhatsApp Desconectado",
-      description: "Clique para conectar sua conta via QR Code",
+      description: "Clique para configurar as credenciais oficiais da Meta",
     }
   }
 
@@ -85,7 +86,7 @@ export function ConnectionBadge({
         <span className={cn("size-2 rounded-full transition-colors", config.dotClass)} />
       </span>
 
-      <span className="font-semibold tracking-tight truncate max-w-[190px] sm:max-w-none">
+      <span className="font-semibold tracking-tight truncate max-w-[200px] sm:max-w-none">
         {config.text}
       </span>
 

@@ -1,39 +1,38 @@
 import React from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
-import { QRCodeCard } from "@/components/connection/QRCodeCard"
+import { WhatsAppCloudCard } from "@/components/connection/WhatsAppCloudCard"
 
 /**
- * Modal de Conexão WhatsApp.
- * Oferece interface flutuante para pareamento via QR Code e gestão do status da instância.
+ * Modal de Conexão WhatsApp Business Cloud API (Meta Oficial).
+ * Oferece interface modal para configuração de chaves (WABA ID, Phone Number ID, Access Token)
+ * ou diagnóstico da conta oficial conectada.
  */
 export function ConnectionModal({
   isOpen,
   onClose,
-  status = "SCAN_QR_CODE",
-  qrcode = null,
-  onRefreshQRCode,
+  status = "CONNECTED",
+  credentials,
+  onSaveCredentials,
   onDisconnect,
-  expiresInSeconds = 60,
-  phoneConnected,
+  onTestConnection,
 }) {
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose && onClose()}>
-      <DialogContent className="max-w-2xl sm:max-w-2xl p-0 overflow-hidden rounded-2xl border-border/80 bg-background">
+      <DialogContent className="max-w-3xl sm:max-w-3xl p-0 overflow-hidden rounded-2xl border-border/80 bg-background">
         <div className="sr-only">
           <DialogHeader>
-            <DialogTitle>Conexão WhatsApp</DialogTitle>
+            <DialogTitle>WhatsApp Business Cloud API (Meta Oficial)</DialogTitle>
             <DialogDescription>
-              Escaneie o QR Code para conectar a instância do WhatsApp do Núcleo3Pro
+              Configurações e diagnóstico de conexão oficial via Graph API da Meta
             </DialogDescription>
           </DialogHeader>
         </div>
-        <QRCodeCard
+        <WhatsAppCloudCard
           status={status}
-          qrcode={qrcode}
-          onRefreshQRCode={onRefreshQRCode}
+          credentials={credentials}
+          onSaveCredentials={onSaveCredentials}
           onDisconnect={onDisconnect}
-          expiresInSeconds={expiresInSeconds}
-          phoneConnected={phoneConnected}
+          onTestConnection={onTestConnection}
           className="border-0 shadow-none rounded-none"
         />
       </DialogContent>
